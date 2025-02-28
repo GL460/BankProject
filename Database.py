@@ -23,7 +23,7 @@ def register_user(email, password):
     conn = sqlite3.connect("featherbank.db")
     cursor = conn.cursor()
 
-    hashed_password = hashlib.sha256(password.encode().hexdigest() #This line encrypts the password using hashlib SHA-256
+    hashed_password = hashlib.sha256(password.encode()).hexdigest() #This line encrypts the password using hashlib SHA-256
 
     try:
         cursor.execute("INSERT INTO users (email, password) VALUES (?,?)", (email, hashed_password)) #The "?" in this line are known as placeholders and are there to prevent SQL injection (hacking technique!)
@@ -41,7 +41,7 @@ def login_user(email, password):
 
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
-    cursor.execute("SELECT * FROM users WHERE email = ? AND password = ?" (email, hashed_password)) #This is where the check occurs
+    cursor.execute("SELECT * FROM users WHERE email = ? AND password = ?", (email, hashed_password)) #This is where the check occurs
     user = cursor.fetchone() #This SQL function gets the first matching user from the db.
 
     if user:
@@ -51,4 +51,4 @@ def login_user(email, password):
         print("Invalid credentials.")
         return False
 
-      conn.close()
+    conn.close()

@@ -1,4 +1,16 @@
 from tkinter import *
+from Database import login_user #Importing function from Database.py which handles login verification. 
+
+#Function to handle login button click
+def login():
+    email = email_entry.get()
+    pin = pin_entry.get()
+
+    if login_user(email, pin):
+        status_label.config(text='Login successful!', fg='green')
+    else:
+        status_label.config(text='Invalid email or PIN', fg='red')
+
 
 #Window/Client code
 window = Tk() #instantiates an instance of a window. 
@@ -32,9 +44,13 @@ pin_label.grid(row=1, column=0, padx=10, pady=5, sticky="e")
 pin_entry = Entry(frame, width=30, show="*")
 pin_entry.grid(row=1, column=1, padx=5)
 
-#Login button
-login_button = Button(window, text="Login")
-login_button.pack(pady=5)
+#Login button (calls login function)
+login_button = Button(window, text="Login", command=login, bg="#4CAF50", fg="white")
+login_button.pack(pady=10)
+
+#Status Message (Login success/fail message)
+status_label = Label(window, text="", bg="#161616", fg="white")
+status_label.pack()
 
 #Runs application
 window.mainloop() #This will place a window on the screen and listen for events.
